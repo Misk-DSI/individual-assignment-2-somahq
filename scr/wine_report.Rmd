@@ -1,0 +1,134 @@
+---
+title: "Report"
+author: "Asma Alqahtani "
+date: '2022-06-14'
+output: html_document
+knit: (function(input, ...) {
+    rmarkdown::render(
+      input,
+      output_dir = "../"
+    )
+  })
+---
+
+
+
+### This table describ each column in the Red Wine Quality dataset 
+
+```{r setup, include=TRUE ,echo=FALSE ,warning=FALSE  }
+
+column_name <- c("fixed acidity" ,"volatile acidity" ,"citric acid" ,"residual sugar" ,"chlorides",
+                 "free sulfur dioxide", "total sulfur dioxide","density" ,  "pH" ,"sulphates")
+Description <- c("acids involved with wine  " , "the amount of acetic acid in wine"   ,"citric acid quantities" , 
+                "the amount of sugar after fermentation" ,
+                "the amount of salt in the wine",
+                "the free form of SO2  ","amount of  forms of S02" ,"the density of water","describes how acidic or basic a wine is on a scale from 0 to 14" ,"sulphates")
+
+describ_data_table <- cbind(column_name ,Description)
+#describ_data_table
+knitr::kable(describ_data_table,"pipe", col.names = c("column_name" , "Description"))
+
+```
+
+
+
+```{r --1 ,echo=FALSE ,results='hide' ,message=FALSE ,warning=FALSE  }
+library(tidyr)
+library(janitor)
+library(DataExplorer)
+#install.packages("here")
+library(here)
+#setwd("C:/misk-DSI/individual-assignment-2-somahq/data")
+#Data1 <- read.csv("winequality-red.csv")
+Data1 <- readr::read_csv(here::here("data" ,"winequality-red.csv" ))
+Data1<-clean_names(Data1)
+
+```
+
+#### clean up the Red Wine Quality dataset names using "janitor" package
+
+```{r echo=FALSE}
+colnames(Data1)
+```
+
+
+
+### The data table 
+```{r --2 ,echo=FALSE   }
+library(DT)
+datatable(Data1)
+```
+
+
+### The Data structure this plot shows the variable with data type ....
+
+```{r --3  ,echo=FALSE }
+
+
+plot_str(Data1)
+
+```
+
+
+```{r}
+plot_str(Data1)
+```
+
+
+ 
+### The QQ plots to shows normality of the data.
+
+```{r --4 ,echo=FALSE }
+Data1$quality = as.factor(Data1$quality)
+
+plot_qq(Data1)
+
+
+
+```
+
+
+### The bar plot 
+
+```{r --5 ,echo=FALSE }
+ plot_bar(Data1)
+
+```
+
+
+### The bar plot
+
+```{r ,echo=FALSE  }
+plot_prcomp(Data1 )
+ 
+plot_str(Data1)
+```
+
+
+### The histogram plot 
+
+```{r ,echo=FALSE  }
+plot_histogram(Data1)
+```
+
+
+```{r --6 ,echo=FALSE }
+#library (GGally)
+#library (dplyr)
+#Data1 %>% 
+ # select("p_h", "alcohol", "sulphates", "density") %>%
+#  ggpairs(mapping = aes(color = Data1$quality, alpha = 0.5))
+```
+
+
+
+
+
+
+##Conclusion 
+
+###### This dataset is related to red wine, from the qq plot we can see all the data distribute normally except chlorides, sulfates, and residual sugar, the bar plot represent the relationship between quality and frequency, and the histogram plot tests the skewness of the data. The density and p_h take the symmetrical distribution, The rest of the variables take the positively skewed distribution. 
+
+
+
+
